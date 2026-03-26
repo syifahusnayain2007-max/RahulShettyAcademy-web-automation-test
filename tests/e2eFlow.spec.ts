@@ -1,6 +1,5 @@
 import { test, expect } from '@playwright/test';
 import { userData } from '../test-data/account-information';
-import { MESSAGES } from '../constant/messages';
 import { Products } from '../test-data/product-information';
 import { DashboardPage } from '../Pages/Dasboard.page';
 import { LoginPage } from '../Pages/Login.page';
@@ -12,7 +11,7 @@ let loginpage: LoginPage;
 let dashboardpage: DashboardPage;
 let cartpage: CartPage;
 let orderpage: OrderPage;
-let orderhistorypage : OrderHistoryPage;
+let orderhistorypage: OrderHistoryPage;
 
 test.beforeEach(async ({ page }) => {
     loginpage = new LoginPage(page);
@@ -33,11 +32,11 @@ test("ensure user can login, checkout products and check order details", async (
     await expect(loginpage.dashboardPageTitle).toBeVisible();
 
     //add products to cart
-    await (loginpage.dashboardPageTitle).waitFor({state:'visible'});
+    await (loginpage.dashboardPageTitle).waitFor({ state: 'visible' });
     await dashboardpage.addProducttoCart(Products.productName[0]);
-    await (dashboardpage.cartCountText).waitFor({state:'visible'})
+    await (dashboardpage.cartCountText).waitFor({ state: 'visible' })
     await dashboardpage.addProducttoCart(Products.productName[2]);
-    await (dashboardpage.cartCountText).waitFor({state:'visible'})
+    await (dashboardpage.cartCountText).waitFor({ state: 'visible' })
 
     //assertion CartCount
     await expect(dashboardpage.cartCountText).toHaveText('2');
@@ -64,7 +63,7 @@ test("ensure user can login, checkout products and check order details", async (
     await orderhistorypage.viewOrderDetails(orderIDText!);
     const summaryID = await orderhistorypage.orderSummaryID()
     //assertion orderID
-     expect(orderIDText).toContain(summaryID)
+    expect(orderIDText).toContain(summaryID)
 
-    
+
 })
